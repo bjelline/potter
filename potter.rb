@@ -43,6 +43,32 @@ class Bookogram
 end
 
 
+def potter2(books, level=5)
+  if level == 1 or books.length <= 1
+    price = books.length * 8
+    return [price, [books.counts]]
+  end
+
+  n = books.biggest_set_of( level )
+
+  prices    = Array.new(n, 0)
+  structure = Array.new(n, [])
+  (0..n).each do |i|
+    books_left_over = books.remove_first( level, i ) 
+    results = potter2( books_left_over, level-1 )
+    prices[i] = (level*i*8*DISCOUNTS[level-1]) + results[0]
+    structure[i] = results[1]
+    if i > 0 
+      structure[i].unshift( Array.new( level, i ) )
+    end
+  end
+  best_price = prices.min()
+  i = prices.rindex( best_price )
+  return best_price, structure[i]
+end
+
+
+
 def potter(books, level=5)
   min_hist = books.min
   books_present = books.present
