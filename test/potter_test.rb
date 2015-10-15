@@ -57,4 +57,12 @@ class PotterTest < MiniTest::Test
     assert_equal 8 * 2 * 0.95 + 8, potter( Bookogram.new([1,1,1    ]), 2)
   end
 
+  def test_level_3_no_discount
+    assert_equal 8 * 6, potter( Bookogram.new([6        ]), 3)
+    assert_equal 8 * 5, potter( Bookogram.new([5        ]), 3)
+    assert_equal 8 * 4, potter( Bookogram.new([4        ]), 3)
+    assert_equal 8 * 3, potter( Bookogram.new([3        ]), 3)
+    assert_equal 8 * 3, potter( Bookogram.new([2,1      ]), 3)
+  end
+
 end

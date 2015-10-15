@@ -51,17 +51,19 @@ def potter(books, level=5)
     price = books.length * 8
     return price
   end
-  if level == 2
-    n = books.biggest_set_of(2)
-    prices = Array.new(n, 0)
-    (0..n).each do |i|
-      books_left_over = books.remove_first( 2, i ) 
-      prices[i] = (2*i*8*0.95) + potter( books_left_over, level-1 )
-    end
-    best_price = prices.min()
-    i = prices.rindex( best_price )
-    return best_price
+
+  n = books.biggest_set_of( level )
+
+  return 8 * books.length if n == 0
+
+  prices = Array.new(n, 0)
+  (0..n).each do |i|
+    books_left_over = books.remove_first( level, i ) 
+    prices[i] = (level*i*8*0.95) + potter( books_left_over, level-1 )
   end
+  best_price = prices.min()
+  i = prices.rindex( best_price )
+  return best_price
 end
 
 
