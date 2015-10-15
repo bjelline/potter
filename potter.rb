@@ -69,25 +69,12 @@ end
 
 
 
-def potter(books, level=5)
-  min_hist = books.min
-  books_present = books.present
+def potter(list_of_books)
+  count = list_of_books.group_by{ |v| v }.values.map{ |list_of_v| list_of_v.length }.sort
 
-  if level == 1 or books.length <= 1
-    price = books.length * 8
-    return price
-  end
+  results = potter2( Bookogram.new( count ), 5 )
 
-  n = books.biggest_set_of( level )
-
-  prices = Array.new(n, 0)
-  (0..n).each do |i|
-    books_left_over = books.remove_first( level, i ) 
-    prices[i] = (level*i*8*0.95) + potter( books_left_over, level-1 )
-  end
-  best_price = prices.min()
-  i = prices.rindex( best_price )
-  return best_price
+  return results[0]   # first is price, second is structure
 end
 
 
