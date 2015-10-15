@@ -54,8 +54,6 @@ def potter(books, level=5)
 
   n = books.biggest_set_of( level )
 
-  return 8 * books.length if n == 0
-
   prices = Array.new(n, 0)
   (0..n).each do |i|
     books_left_over = books.remove_first( level, i ) 

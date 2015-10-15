@@ -45,24 +45,24 @@ class PotterTest < MiniTest::Test
     assert_equal 8 * 3, potter( Bookogram.new([2,1,0,0,0]), 1)
   end
 
-  def test_level_2_no_discount
-    assert_equal 8 * 6, potter( Bookogram.new([6        ]), 2)
-    assert_equal 8 * 5, potter( Bookogram.new([5        ]), 2)
-    assert_equal 8 * 4, potter( Bookogram.new([4        ]), 2)
-    assert_equal 8 * 3, potter( Bookogram.new([3        ]), 2)
+  def test_no_discount_any_level
+    (1..5).each do |level|
+      assert_equal 8 * 6, potter( Bookogram.new([6        ]), level)
+      assert_equal 8 * 5, potter( Bookogram.new([5        ]), level)
+      assert_equal 8 * 4, potter( Bookogram.new([4        ]), level)
+      assert_equal 8 * 3, potter( Bookogram.new([3        ]), level)
+    end
   end
 
-  def test_level_2_discount_2
-    assert_equal 8 * 2 * 0.95 + 8, potter( Bookogram.new([2,1      ]), 2)
+  def test_discount_2
+    (2..5).each do |level|
+      assert_equal 8 * 2 * 0.95 + 8 * 5, potter( Bookogram.new([6,1      ]), level)
+      assert_equal 8 * 2 * 0.95 + 8 * 4, potter( Bookogram.new([5,1      ]), level)
+      assert_equal 8 * 2 * 0.95 + 8 * 3, potter( Bookogram.new([4,1      ]), level)
+      assert_equal 8 * 2 * 0.95 + 8 * 2, potter( Bookogram.new([3,1      ]), level)
+      assert_equal 8 * 2 * 0.95 + 8 * 1, potter( Bookogram.new([2,1      ]), level)
+    end
     assert_equal 8 * 2 * 0.95 + 8, potter( Bookogram.new([1,1,1    ]), 2)
-  end
-
-  def test_level_3_no_discount
-    assert_equal 8 * 6, potter( Bookogram.new([6        ]), 3)
-    assert_equal 8 * 5, potter( Bookogram.new([5        ]), 3)
-    assert_equal 8 * 4, potter( Bookogram.new([4        ]), 3)
-    assert_equal 8 * 3, potter( Bookogram.new([3        ]), 3)
-    assert_equal 8 * 3, potter( Bookogram.new([2,1      ]), 3)
   end
 
 end
