@@ -63,6 +63,7 @@ class PotterTest < MiniTest::Test
       assert_equal 8 * 2 * 0.95 + 8 * 1, potter( Bookogram.new([2,1      ]), level)
     end
     assert_equal 8 * 2 * 0.95 + 8, potter( Bookogram.new([1,1,1    ]), 2)
+    # assert_equal 8 * 2 * 0.95 * 2, potter( Bookogram.new([1,1,1,1  ]), 2)
   end
 
 end
