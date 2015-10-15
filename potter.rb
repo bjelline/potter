@@ -1,6 +1,9 @@
 DISCOUNTS = [1, 0.95, 0.90, 0.80, 0.75]
 
 class Bookogram
+# 5 counts for the five books
+# Without loss of generality (WOLOG) sorted descending
+
   attr_reader :counts
   def initialize(a)
     @counts = a
@@ -9,6 +12,21 @@ class Bookogram
         @counts[i] = 0
       end
     end
+    @counts = @counts.sort.reverse
+  end
+
+  def to_s
+    @counts.to_s
+  end
+
+  def biggest_set_of(n)
+    return @counts[n-1]
+  end
+
+  def remove_first( x, y )
+    c = @counts.clone
+    (0..x-1).each { |i| c[i] -= y }
+    return Bookogram.new(c)
   end
 
   def length
@@ -30,16 +48,19 @@ def potter(books, level=5)
   books_present = books.present
 
   if level == 1 or books.length <= 1
-    return books.length * 8
+    price = books.length * 8
+    return price
   end
   if level == 2
-    if books_present.length >= 2 
-      first = 
-      second = books_present.pop()
-      # return 2 * 8 * 0.95 + potter( leftover_books, 
-    else
-      return books.length * 8
+    n = books.biggest_set_of(2)
+    prices = Array.new(n, 0)
+    (0..n).each do |i|
+      books_left_over = books.remove_first( 2, i ) 
+      prices[i] = (2*i*8*0.95) + potter( books_left_over, level-1 )
     end
+    best_price = prices.min()
+    i = prices.rindex( best_price )
+    return best_price
   end
 end
 
