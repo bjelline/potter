@@ -7,6 +7,7 @@ class PotterTest < MiniTest::Test
     assert_equal 8 * 2, potter([ 'Sorcerers Stone', 'Sorcerers Stone' ])
     assert_equal 8 * 2 * 0.95 + 8 * 1, potter([ 'Sorcerers Stone', 'Sorcerers Stone', 'Darthly Hallows' ]) 
     assert_equal 8 * 5 * 0.75 + 8 * 1, potter([ 'Stone', 'Chamber', 'Prisoner', 'Goblet', 'Order', 'Prisoner' ])
+    assert_equal 8 * 4 * 0.80 * 2,     potter([ 'Stone', 'Stone', 'Chamber', 'Chamber', 'Prisoner', 'Prisoner', 'Goblet', 'Order' ])
   end
 
   def test_bookogram
@@ -79,6 +80,8 @@ class PotterTest < MiniTest::Test
     assert_equal [ 8 * 5 * 0.75 + 8 * 5,                    [ [1,1,1,1,1], [5,0,0,0,0]          ] ], potter2( Bookogram.new([6,1,1,1,1]), 5)
     assert_equal [ 8 * 5 * 0.75 + 8 * 2 * 3 * 0.95 + 8 * 2, [ [1,1,1,1,1], [3,3],   [2,0,0,0,0] ] ], potter2( Bookogram.new([6,4,1,1,1]), 5)
     assert_equal [ 8 * 5 * 0.75 + 8 * 3 * 3 * 0.90 + 8 * 2, [ [1,1,1,1,1], [3,3,3], [2,0,0,0,0] ] ], potter2( Bookogram.new([6,4,4,1,1]), 5)
-    # assert_equal [                8 * 4 * 2 * 0.80        , [ [1,1,1,1], [1,1,1,1]              ] ], potter2( Bookogram.new([2,2,2,1,1]), 5)
+  end
+  def test_discount_horcurx
+    assert_equal [                8 * 4 * 2 * 0.80        , [ [1,1,1,1], [1,1,1,1]              ] ], potter2( Bookogram.new([2,2,2,1,1]), 5)
   end
 end

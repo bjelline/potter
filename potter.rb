@@ -1,4 +1,18 @@
+#
+# discount factor for i-1 distinct books,
+# e.g. for 3 different books a,b,c 
+# you will get a discount of DISCOUNT[2] == 0.95
+#
 DISCOUNTS = [1, 0.95, 0.90, 0.80, 0.75]
+
+def potter(list_of_books)
+  counts = list_of_books.group_by{ |v| v }.values.map{ |list_of_v| list_of_v.length }.sort
+
+  results = potter2( Bookogram.new( counts ), 5 )
+
+  return results[0]   # first is price, second is structure
+end
+
 
 class Bookogram
 # 5 counts for the five books
@@ -56,25 +70,21 @@ def potter2(books, level=5)
   (0..n).each do |i|
     books_left_over = books.remove_first( level, i ) 
     results = potter2( books_left_over, level-1 )
-    prices[i] = (level*i*8*DISCOUNTS[level-1]) + results[0]
+    prices[i]    = (level*i*8*DISCOUNTS[level-1]) + results[0]
     structure[i] = results[1]
     if i > 0 
       structure[i].unshift( Array.new( level, i ) )
     end
   end
+  puts "there are #{n} possibilities:"
+  (0..n).each do | i |
+    puts "%5.2f for %s" % [ prices[i], structure[i] ]
+  end
+  puts "."
   best_price = prices.min()
   i = prices.rindex( best_price )
   return best_price, structure[i]
 end
 
-
-
-def potter(list_of_books)
-  count = list_of_books.group_by{ |v| v }.values.map{ |list_of_v| list_of_v.length }.sort
-
-  results = potter2( Bookogram.new( count ), 5 )
-
-  return results[0]   # first is price, second is structure
-end
 
 
