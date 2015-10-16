@@ -2,6 +2,9 @@
 # Brigitte Jellineks solution to the "Harry Potter" Kata
 #
 
+# number of books in the potter series
+NO_POTTERS = 7
+
 # price for one potter book
 PRICE     = 8                           
 
@@ -17,7 +20,7 @@ def potter(list_of_books)
   
   bookogram = Bookogram.new( counts )
 
-  results = potter2( bookogram, 5 )
+  results = potter2( bookogram, DISCOUNTS.length )
 
   return results[0]   # first is price, second is structure
 end
@@ -78,15 +81,20 @@ end
 
 
 
+require 'forwardable'
 
 class Bookogram
-# 5 counts for the five books
+# 7 counts for the seven books
 # Without loss of generality (WOLOG) sorted descending
 
   attr_reader :counts
+
+  extend Forwardable
+  def_delegators :@counts, :to_s, :min
+
   def initialize(a)
     @counts = a
-    (0..4).each do |i|
+    (0..NO_POTTERS-1).each do |i|
       if @counts[i].nil?
         @counts[i] = 0
       end
@@ -94,18 +102,14 @@ class Bookogram
     @counts = @counts.sort.reverse
   end
 
-  def to_s
-    @counts.to_s
-  end
-
   def biggest_set_of(n)
     # the book-counts are sorted by size, e.g:
-    # 4,3,2,2,0
-    # 2,0,0,0,0
+    # 4,3,2,2,0,0,0
+    # 2,0,0,0,0,0,0
     # so the biggest set of - say - three books
     # is found by just looking at the third element in the array
-    # 4,3,_2_,2,0 
-    # 2,0,_0_,0,0 
+    # 4,3,_2_,2,0,0,0
+    # 2,0,_0_,0,0,0,0
     
     return @counts[n-1]
   end
@@ -118,14 +122,6 @@ class Bookogram
 
   def length
     @counts.reduce(:+)
-  end
-
-  def min
-    @counts.min
-  end
-
-  def present
-    @counts.find_all { |count| count > 0 }
   end
 end
 
